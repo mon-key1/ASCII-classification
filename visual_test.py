@@ -3,7 +3,7 @@ import tkinter as tk
 from PIL import Image, ImageOps, ImageGrab
 from tensorflow.keras.models import load_model
 
-model = load_model('mnist_model.keras')
+model = load_model('data/mnist_model.keras')
 
 canvas_width = 360
 canvas_height = 360
@@ -15,7 +15,7 @@ def preprocess_image(image):
     image_array = np.array(image) / 255.0
     return image_array.reshape(1, 784)
 
-def save_image_as_png(image, filename="output.png"):
+def save_image_as_png(image, filename="data/output.png"):
     image.save(filename)
 
 def update_prediction():
@@ -72,6 +72,6 @@ clear_button.pack()
 prediction_label = tk.Label(root, text="Predicted: ", font=("Arial", 24), fg="red")
 prediction_label.pack()
 
-root.after(50, update_prediction)
+root.after(100, update_prediction)
 
 root.mainloop()

@@ -2,8 +2,8 @@ import numpy as np
 from PIL import Image
 import os
 
-train_folder = 'train'
-test_folder = 'test'
+train_folder = 'data/dataset/train'
+test_folder = 'data/dataset/test'
 
 def load_images_and_labels(folder):
     images = []
@@ -31,6 +31,6 @@ def load_images_and_labels(folder):
 x_train, y_train = load_images_and_labels(train_folder)
 x_test, y_test = load_images_and_labels(test_folder)
 
-np.savez('mnist_custom.npz', x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
+np.savez('data/mnist_custom.npz', x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
 
 print("Data successfully saved to mnist_custom.npz")

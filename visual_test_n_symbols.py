@@ -1,10 +1,9 @@
-
 import numpy as np
 import tkinter as tk
 from PIL import Image, ImageOps, ImageGrab
 from tensorflow.keras.models import load_model
 
-model = load_model('mnist_model.keras')
+model = load_model('data/mnist_model.keras')
 
 scale = 150
 n = 3  # num of symbols

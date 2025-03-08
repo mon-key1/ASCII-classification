@@ -3,7 +3,7 @@ from tensorflow.keras import layers, models
 import numpy as np
 import matplotlib.pyplot as plt
 
-path_to_mnist = 'mnist_custom.npz'
+path_to_mnist = 'data/mnist_custom.npz'
 with np.load(path_to_mnist) as data:
     train_images, train_labels = data['x_train'], data['y_train']
     test_images, test_labels = data['x_test'], data['y_test']
@@ -27,7 +27,7 @@ model.fit(train_images, train_labels, epochs=60, batch_size=128)
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print(f"Test accuracy: {test_acc}")
 
-model.save('mnist_model.keras')
+model.save('models/mnist_model.keras')
 
 predictions = model.predict(test_images)
 print(np.argmax(predictions[0]))
