@@ -3,6 +3,8 @@ Classifying ASCII chars using a fully connected feedforward neural network train
 
 In demo it works with A-B:
 
-![Several symbols](test2.gif)
-
 ![First test](test.gif)
+
+Several symbols:
+
+![Several symbols](test2.gif)
