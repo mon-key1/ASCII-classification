@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 model = load_model('mnist_model.keras')
 
 scale = 150
-n = 5  # num of symbols
+n = 3  # num of symbols
 canvas_width = scale * n
 canvas_height = scale
 
