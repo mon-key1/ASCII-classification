@@ -1,3 +1,4 @@
+
 import numpy as np
 import tkinter as tk
 from PIL import Image, ImageOps, ImageGrab
@@ -5,8 +6,14 @@ from tensorflow.keras.models import load_model
 
 model = load_model('mnist_model.keras')
 
-canvas_width = 720
-canvas_height = 360
+scale = 150
+n = 5  # num of symbols
+canvas_width = scale * n
+canvas_height = scale
+
+canvas_width_img = canvas_width / 1.4
+canvas_height_img = canvas_height / 1.4
+
 image_size = (28, 28)
 
 def preprocess_image(image):
@@ -26,32 +33,23 @@ def update_prediction():
     canvas.postscript(file="tmp.ps", colormode='color')
     image = Image.open("tmp.ps")
 
-    left_image = image.crop((0, 0, 270, 270))
-    right_image = image.crop((270, 0, 540, 270))
-    full_image = image.crop((0, 0, 520, 270))
+    fullText = ""
 
-    left_predicted_label = 0
-    right_predicted_label = 0
+    for j in range(0, n):
+        p1 = canvas_height_img * j
+        p2 = canvas_height_img * (j + 1)
+        cur_image = image.crop((p1, 0, p2, canvas_height_img))
+        save_image_as_png(cur_image, f"res/output{j}.png")
 
-    if not is_canvas_empty(left_image):
-        left_input_image = preprocess_image(left_image)
-        left_prediction = model.predict(left_input_image)
-        left_predicted_label = np.argmax(left_prediction)
-    
-    if not is_canvas_empty(right_image):
-        right_input_image = preprocess_image(right_image)
-        right_prediction = model.predict(right_input_image)
-        right_predicted_label = np.argmax(right_prediction)
+        if not is_canvas_empty(cur_image):
+            cur_input_image = preprocess_image(cur_image)
+            cur_prediction = model.predict(cur_input_image)
+            cur_predicted_label = np.argmax(cur_prediction)
 
-    save_image_as_png(left_image, "r/output1.png")
-    save_image_as_png(right_image, "r/output2.png")
-    save_image_as_png(full_image, "r/output3.png")
-    
-    textPredictLeft = chr(ord('A') + left_predicted_label - 1) if left_predicted_label != 0 else ""
-    textPredictRight = chr(ord('A') + right_predicted_label - 1) if right_predicted_label != 0 else ""
-    
-    prediction_label.config(text=f"Text: {textPredictLeft + textPredictRight}")
-    root.after(3000, update_prediction)
+            textPredicted = chr(ord('A') + cur_predicted_label - 1) if cur_predicted_label != 0 else ""
+            fullText += textPredicted
+
+    prediction_label.config(text=f"Text: {fullText}")
 
 def clear_canvas():
     canvas.delete("all")
@@ -65,7 +63,7 @@ canvas.pack()
 
 drawing = False
 last_x, last_y = None, None
-pen_width = 40
+pen_width = 20
 
 def start_drawing(event):
     global drawing, last_x, last_y
@@ -81,6 +79,7 @@ def draw(event):
 def stop_drawing(event):
     global drawing
     drawing = False
+    update_prediction()  # Вызываем update_prediction при отпускании мыши
 
 canvas.bind("<Button-1>", start_drawing)
 canvas.bind("<B1-Motion>", draw)
@@ -91,7 +90,5 @@ clear_button.pack()
 
 prediction_label = tk.Label(root, text="Text: ", font=("Arial", 36), fg="red")
 prediction_label.pack()
-
-root.after(3000, update_prediction)
 
 root.mainloop()
