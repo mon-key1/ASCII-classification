@@ -51,7 +51,7 @@ def update_prediction():
     textPredictRight = chr(ord('A') + right_predicted_label - 1) if right_predicted_label != 0 else ""
     
     prediction_label.config(text=f"Text: {textPredictLeft + textPredictRight}")
-    root.after(1000, update_prediction)
+    root.after(3000, update_prediction)
 
 def clear_canvas():
     canvas.delete("all")
@@ -92,6 +92,6 @@ clear_button.pack()
 prediction_label = tk.Label(root, text="Text: ", font=("Arial", 36), fg="red")
 prediction_label.pack()
 
-root.after(50, update_prediction)
+root.after(3000, update_prediction)
 
 root.mainloop()
