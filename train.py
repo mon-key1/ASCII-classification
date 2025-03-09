@@ -11,8 +11,8 @@ with np.load(path_to_mnist) as data:
 print("Train images shape:", train_images.shape)
 train_images = train_images / 255.0
 test_images = test_images / 255.0
-train_images = train_images.reshape((248, 28 * 28))
-test_images = test_images.reshape((27, 28 * 28))
+train_images = train_images.reshape((9612, 28 * 28))
+test_images = test_images.reshape((25, 28 * 28))
 
 model = models.Sequential()
 model.add(layers.Dense(512, activation='relu', input_shape=(28 * 28,)))
@@ -22,7 +22,7 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(train_images, train_labels, epochs=60, batch_size=128)
+model.fit(train_images, train_labels, epochs=200, batch_size=128)
 
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print(f"Test accuracy: {test_acc}")
