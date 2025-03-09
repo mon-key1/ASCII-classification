@@ -1,6 +1,10 @@
 # ASCII-classification
-Classifying ASCII chars using a fully connected feedforward neural network trained on a custom dataset obtained from 265 commercially free fonts.
 
-In demo it works with 4 symbols:
+This project provides a script for generating a pseudo handwritten dataset, using fonts and augmentation.
 
-![Several symbols](res/test.gif)
+As an example of the dataset's performance, the project solves the Latin words classification problem using a fully connected feedforward neural network
+
+Drawing test:
+
+![Several symbols](res/test1.gif)
+

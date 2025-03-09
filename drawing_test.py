@@ -50,15 +50,15 @@ def preprocess_image(image):
     image_array = np.array(image) / 255.0
     return image_array.reshape(1, 784)
 
-def save_image_as_png(image, filename="data/output.png"):
+def save_image_as_png(image, filename="res/output.png"):
     image.save(filename)
 
 def update_prediction():
-    canvas.postscript(file="tmp.ps", colormode='color')
-    image = Image.open("tmp.ps")
-    save_image_as_png(image, "output.png")
+    canvas.postscript(file="res/tmp.ps", colormode='color')
+    image = Image.open("res/tmp.ps")
+    save_image_as_png(image)
     
-    letters = letters_extract("output.png")
+    letters = letters_extract("res/output.png")
     
     predicted_text = ""
     for letter in letters:
@@ -67,18 +67,11 @@ def update_prediction():
         input_image = preprocess_image(letter_img)
         prediction = model.predict(input_image)
         predicted_label = np.argmax(prediction)
-        if predicted_label == 1:
-            predicted_text += "H"
-        elif predicted_label == 2:
-            predicted_text += "E"
-        elif predicted_label == 3:
-            predicted_text += "L"
-        elif predicted_label == 4:
-            predicted_text += "O"
+        predicted_text += chr(64 + predicted_label)
     
     prediction_label.config(text=f"Text: {predicted_text}")
 
-    with open("output.txt", "w") as file:
+    with open("res/drawing_output.txt", "w") as file:
         file.write(predicted_text + "\n")  
 
 def clear_canvas():
@@ -88,12 +81,12 @@ def clear_canvas():
 root = tk.Tk()
 root.title("Draw a digit")
 
-canvas = tk.Canvas(root, width=900, height=360, bg="white")
+canvas = tk.Canvas(root, width=900, height=270, bg="white")
 canvas.pack()
 
 drawing = False
 last_x, last_y = None, None
-pen_width = 20
+pen_width = 5
 
 def start_drawing(event):
     global drawing, last_x, last_y
