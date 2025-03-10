@@ -4,11 +4,11 @@ This project provides a script for generating a pseudo handwritten dataset, usin
 
 As an example of the dataset's performance, the project solves the Latin words classification problem using a fully connected feedforward neural network
 
-Generated Dataset:
+**Generated Dataset**
 
 ![Dataset](res/data_exmpl.png)
 
-Test after training:
+**Test after training**
 
-![Several symbols](res/test1.gif)
+![Several symbols](res/test.gif)
 
