@@ -1,4 +1,4 @@
-# ASCII-classification
+# ASCII classification with Generated Handwritten Datasets
 
 This project provides a script for generating a pseudo handwritten dataset, using fonts and augmentation.
 
